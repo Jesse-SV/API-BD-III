@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.futebol.domain.dto.usuario.UsuarioRequestDTO;
 import com.example.futebol.domain.dto.usuario.UsuarioResponseDTO;
+import com.example.futebol.domain.exception.ResourceBadRequestException;
+import com.example.futebol.domain.exception.ResourceNotFoundException;
 import com.example.futebol.domain.model.Usuario;
 import com.example.futebol.domain.repository.UsuarioRepository;
 @Service
@@ -34,26 +36,39 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
         if(optUsuario.isEmpty()){
             // lançar exceção 
+            throw new ResourceNotFoundException("Não foi possível encontrar o usuário com o id: " + id);
         }
         return mapper.map(optUsuario.get(), UsuarioResponseDTO.class);
     }
 
     @Override
     public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cadastrar'");
+        senhaEmailObrigatorios(dto);
+        Usuario usuario = mapper.map(dto, Usuario.class);
+        //Encriptografar senha
+        usuario = usuarioRepository.save(usuario);
+        return mapper.map(usuario,UsuarioResponseDTO.class);
     }
-
+    
     @Override
     public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'atualizar'");
+        obterPorId(id);//O obter por Id já possui a exceção para caso o usuário não exista.
+        senhaEmailObrigatorios(dto);
+        Usuario usuario = mapper.map(dto, Usuario.class);
+        usuario.setId(id);//Seta o id do usuário como o id referenciado na entrada
+        usuario = usuarioRepository.save(usuario);
+        return mapper.map(usuario, UsuarioResponseDTO.class);
     }
 
     @Override
     public void deletar(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deletar'");
+        obterPorId(id);
+        usuarioRepository.deleteById(id);
+    }
+    public void senhaEmailObrigatorios(UsuarioRequestDTO dto){
+        if((dto.getEmail() == null) || (dto.getSenha() == null)){
+            throw new ResourceBadRequestException("Email e Senha são obrigatórios.");
+        }
     }
     
 }
