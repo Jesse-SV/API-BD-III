@@ -1,13 +1,11 @@
 package com.example.futebol.domain.model;
 
 import java.util.Date;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 public class Time{
     @Id
@@ -20,8 +18,6 @@ public class Time{
     private String divisao;
     @Column(nullable = false)
     private Date anoFundacao;
-    @OneToMany(mappedBy = "jogador")
-    private List<Jogador> jogadores;
     public String getId() {
         return id;
     }
@@ -58,11 +54,4 @@ public class Time{
     public void setAnoFundacao(Date anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
-    public List<Jogador> getJogadores() {
-        return jogadores;
-    }
-    public void setJogadores(List<Jogador> jogadores) {
-        this.jogadores = jogadores;
-    }
-    
 }
