@@ -1,5 +1,6 @@
 package com.example.futebol.domain.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,8 +63,14 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
 
     @Override
     public void deletar(Long id) {
-        obterPorId(id);
-        usuarioRepository.deleteById(id);
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        if(optUsuario.isEmpty()){
+            throw new ResourceNotFoundException("não foi possível encontrar o usuário com id:"+ id);
+        }
+    
+        Usuario usuario = optUsuario.get();
+        usuario.setDataInativacao(new Date());
+        usuarioRepository.save(usuario);
     }
     public void senhaEmailObrigatorios(UsuarioRequestDTO dto){
         if((dto.getEmail() == null) || (dto.getSenha() == null)){
