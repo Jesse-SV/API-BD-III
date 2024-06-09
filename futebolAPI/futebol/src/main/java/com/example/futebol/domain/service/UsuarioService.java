@@ -47,16 +47,25 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         senhaEmailObrigatorios(dto);
         Usuario usuario = mapper.map(dto, Usuario.class);
         //Encriptografar senha
+        String senha = usuario.getSenha();
+        usuario.setSenha(senha);
+        usuario.setId(null);
+        usuario.setDataCadastro(new Date());
         usuario = usuarioRepository.save(usuario);
         return mapper.map(usuario,UsuarioResponseDTO.class);
     }
     
     @Override
     public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
-        obterPorId(id);//O obter por Id já possui a exceção para caso o usuário não exista.
+        UsuarioResponseDTO usuarioBanco = obterPorId(id);//O obter por Id já possui a exceção para caso o usuário não exista.
         senhaEmailObrigatorios(dto);
         Usuario usuario = mapper.map(dto, Usuario.class);
         usuario.setId(id);//Seta o id do usuário como o id referenciado na entrada
+        usuario.setNome(dto.getNome());
+        usuario.setSenha(dto.getSenha());
+        usuario.setEmail(dto.getEmail());
+        usuario.setDataCadastro(usuarioBanco.getDataCadastro());
+        usuario.setDataInativacao(usuarioBanco.getDataInativacao());
         usuario = usuarioRepository.save(usuario);
         return mapper.map(usuario, UsuarioResponseDTO.class);
     }

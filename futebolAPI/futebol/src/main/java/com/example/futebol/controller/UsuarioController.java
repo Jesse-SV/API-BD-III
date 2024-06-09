@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,7 @@ public class UsuarioController{
         UsuarioResponseDTO usuario = usuarioService.cadastrar(dto);
         return new ResponseEntity<>(usuario,HttpStatus.CREATED);
     }
+    @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable Long id, @RequestBody UsuarioRequestDTO dto){
         UsuarioResponseDTO usuario = usuarioService.atualizar(id,dto);
         return new ResponseEntity<UsuarioResponseDTO>(usuario,HttpStatus.OK);
