@@ -1,10 +1,10 @@
 package com.example.futebol.domain.model;
 
-//import java.util.Collection;
+import java.util.Collection;
 import java.util.Date;
 
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 @Entity
-public class Usuario /*implements UserDetails*/{
+public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idUsuario")
@@ -63,21 +63,19 @@ public class Usuario /*implements UserDetails*/{
     public void setDataInativacao(Date dataInativacao) {
         this.dataInativacao = dataInativacao;
     }
-    /*@Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
         return null;
     }
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
         return senha;
     }
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return email;
-    }*/
+    }
 
     
 }
