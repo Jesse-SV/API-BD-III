@@ -1,6 +1,7 @@
 package com.example.futebol.security;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.futebol.common.ConversorData;
 import com.example.futebol.domain.dto.authentication.LoginRequestDTO;
@@ -25,7 +27,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationToken{
+public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter{
     private AuthenticationManager authenticationManager;
     private JwtUtil jwtUtil;
     
@@ -84,7 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationToken
     AuthenticationException failed)
     throws IOException, ServletException{
         String dataHora = ConversorData
-        .converterDateParaDataHora(new Date());
+        .converterParaFormatoDataHora(new Date());
         ErroResposta erro = new ErroResposta(dataHora,
          401, "Unauthorized", failed.getMessage());
         response.setStatus(401);
