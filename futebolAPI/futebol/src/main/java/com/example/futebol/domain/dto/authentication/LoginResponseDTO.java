@@ -1,4 +1,4 @@
-package com.example.futebol.domain.dto.authtication;
+package com.example.futebol.domain.dto.authentication;
 
 import com.example.futebol.domain.dto.usuario.UsuarioResponseDTO;
 

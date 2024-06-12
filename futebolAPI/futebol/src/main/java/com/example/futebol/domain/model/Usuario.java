@@ -63,6 +63,7 @@ public class Usuario implements UserDetails{
     public void setDataInativacao(Date dataInativacao) {
         this.dataInativacao = dataInativacao;
     }
+    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
@@ -75,6 +76,12 @@ public class Usuario implements UserDetails{
     @Override
     public String getUsername() {
         return email;
+    }
+    public String getFoto() {
+        return foto;
+    }
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
     

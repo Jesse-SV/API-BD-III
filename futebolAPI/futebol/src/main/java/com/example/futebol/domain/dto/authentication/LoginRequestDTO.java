@@ -1,4 +1,4 @@
-package com.example.futebol.domain.dto.authtication;
+package com.example.futebol.domain.dto.authentication;
 
 public class LoginRequestDTO {
     private String email;
