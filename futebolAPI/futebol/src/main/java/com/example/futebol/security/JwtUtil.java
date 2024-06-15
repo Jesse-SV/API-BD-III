@@ -13,15 +13,17 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
 import org.springframework.security.core.Authentication;
+
 @Component
 public class JwtUtil {
     @Value("${auth.jwt.secret}")
     private String jwtSecret;
-    @Value("${auth.jwt-experiation-milliseg}")
+    @Value("${auth.jwt-experimentation-milliseg}")
     private Long jwtExpirationMilliseg;
-    public String gerarToken(Authentication auth){
+
+    public String gerarToken(Authentication authentication){
         Date dataExpiracao = new Date(new Date().getTime() + jwtExpirationMilliseg);
-        Usuario usuario = (Usuario) auth.getPrincipal();
+        Usuario usuario = (Usuario) authentication.getPrincipal();
         try{
             Key secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes("UTF-8"));
             return Jwts.builder().setSubject(usuario.getUsername()).setIssuedAt(new Date())

@@ -25,6 +25,8 @@ import com.example.futebol.domain.service.UsuarioService;
 public class UsuarioController{
     @Autowired
     private UsuarioService usuarioService;
+
+
     @GetMapping
     public ResponseEntity<List<UsuarioResponseDTO>> obterTodos(){
         return ResponseEntity.ok(usuarioService.obterTodos());
@@ -34,11 +36,13 @@ public class UsuarioController{
     public ResponseEntity<UsuarioResponseDTO> obterPorId(@PathVariable Long id){
         return ResponseEntity.ok(usuarioService.obterPorId(id));
     }
+
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> cadastrar(@RequestBody UsuarioRequestDTO dto){
         UsuarioResponseDTO usuario = usuarioService.cadastrar(dto);
         return new ResponseEntity<>(usuario,HttpStatus.CREATED);
     }
+    
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> atualizar(@PathVariable Long id, @RequestBody UsuarioRequestDTO dto){
         UsuarioResponseDTO usuario = usuarioService.atualizar(id,dto);

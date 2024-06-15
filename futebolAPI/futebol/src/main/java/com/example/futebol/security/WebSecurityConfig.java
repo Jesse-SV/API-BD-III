@@ -36,14 +36,13 @@ public class WebSecurityConfig {
 
     @Bean 
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.headers().frameOptions().disable().and()
-        .cors().and()
-        .csrf().disable()
+        http.headers().frameOptions().disable().and().cors().and().csrf().disable()
         .authorizeHttpRequests((auth) ->
          auth.requestMatchers(HttpMethod.POST, "/futebol/usuarios").permitAll()
-        .anyRequest().authenticated())
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration), jwtUtil));
+        .anyRequest().authenticated()).sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilter(new JwtAuthenticationFilter(authenticationManager(authenticationConfiguration),
+        jwtUtil));
         http.addFilter(new JwtAuthorizationFilter(authenticationManager(authenticationConfiguration),
         jwtUtil, userDetailsSecurityServer));
         return http.build();

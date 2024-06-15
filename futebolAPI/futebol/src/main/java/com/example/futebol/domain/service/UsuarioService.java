@@ -16,6 +16,7 @@ import com.example.futebol.domain.exception.ResourceBadRequestException;
 import com.example.futebol.domain.exception.ResourceNotFoundException;
 import com.example.futebol.domain.model.Usuario;
 import com.example.futebol.domain.repository.UsuarioRepository;
+
 @Service
 public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioResponseDTO> {
     @Autowired
@@ -23,7 +24,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
     @Autowired
     private ModelMapper mapper;
     @Autowired 
-    private BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public List<UsuarioResponseDTO> obterTodos() {
@@ -48,9 +49,13 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
     @Override
     public UsuarioResponseDTO cadastrar(UsuarioRequestDTO dto) {
         senhaEmailObrigatorios(dto);
+        Optional<Usuario> optUsuario = usuarioRepository.findByEmail(dto.getEmail());
+        if(optUsuario.isPresent()){
+            throw new ResourceBadRequestException("Já existe um usuário cadastrado com este email.");
+        }
         Usuario usuario = mapper.map(dto, Usuario.class);
         //Encriptografar senha
-        String senha = passwordEncoder.encode(usuario.getSenha());
+        String senha = bCryptPasswordEncoder.encode(usuario.getSenha());
         usuario.setSenha(senha);
         usuario.setId(null);
         usuario.setDataCadastro(new Date());
@@ -63,7 +68,7 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
         UsuarioResponseDTO usuarioBanco = obterPorId(id);//O obter por Id já possui a exceção para caso o usuário não exista.
         senhaEmailObrigatorios(dto);
         Usuario usuario = mapper.map(dto, Usuario.class);
-        usuario.setId(id);//Seta o id do usuário como o id referenciado na entrada
+        //Seta o id do usuário como o id referenciado na entrada
         usuario.setSenha(dto.getSenha());
         usuario.setId(id);
         usuario.setDataCadastro(usuarioBanco.getDataCadastro());
@@ -88,5 +93,4 @@ public class UsuarioService implements ICRUDService<UsuarioRequestDTO, UsuarioRe
             throw new ResourceBadRequestException("Email e Senha são obrigatórios.");
         }
     }
-    
 }

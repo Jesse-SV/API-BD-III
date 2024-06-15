@@ -14,6 +14,7 @@ import com.example.futebol.domain.repository.UsuarioRepository;
 public class UserDetailsSecurityServer implements UserDetailsService{
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> optUsuario = usuarioRepository.findByEmail(username);
