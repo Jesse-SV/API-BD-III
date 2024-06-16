@@ -6,22 +6,25 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 
 public class Time{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTime")
-    private String id;
+    private Long id;
     private String cidade;
     private String estado;
     private String pais;
     private String divisao;
     @Column(nullable = false)
     private Date anoFundacao;
-    public String getId() {
+    @JoinColumn(name = "idUsuario")
+    private Usuario usuario;
+    public Long getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getCidade() {
@@ -54,4 +57,11 @@ public class Time{
     public void setAnoFundacao(Date anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
+    public Usuario getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
 }
