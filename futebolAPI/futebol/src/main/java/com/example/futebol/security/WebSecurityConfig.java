@@ -37,7 +37,7 @@ public class WebSecurityConfig {
     @Bean 
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.headers().frameOptions().disable().and().cors().and().csrf().disable()
-        .authorizeHttpRequests((auth) ->
+        .authorizeHttpRequests((auth) -> //auth.anyRequest().permitAll());
          auth.requestMatchers(HttpMethod.POST, "/futebol/usuarios").permitAll()
         .anyRequest().authenticated()).sessionManagement()
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

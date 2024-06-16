@@ -18,7 +18,7 @@ import org.springframework.security.core.Authentication;
 public class JwtUtil {
     @Value("${auth.jwt.secret}")
     private String jwtSecret;
-    @Value("${auth.jwt-experimentation-milliseg}")
+    @Value("${auth.jwt-experiation-milliseg}")
     private Long jwtExpirationMilliseg;
 
     public String gerarToken(Authentication authentication){
@@ -28,7 +28,6 @@ public class JwtUtil {
             Key secretKey = Keys.hmacShaKeyFor(jwtSecret.getBytes("UTF-8"));
             return Jwts.builder().setSubject(usuario.getUsername()).setIssuedAt(new Date())
             .setExpiration(dataExpiracao).signWith(secretKey).compact();
-
         }catch(Exception e){
             System.out.println(e.getMessage());
             return "";
