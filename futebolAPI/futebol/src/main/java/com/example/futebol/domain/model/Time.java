@@ -3,11 +3,14 @@ package com.example.futebol.domain.model;
 import java.util.Date;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "Time")
 public class Time{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
