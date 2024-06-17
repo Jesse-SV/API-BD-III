@@ -2,6 +2,7 @@ package com.example.futebol.domain.model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 @Entity
 public class Usuario implements UserDetails{
     @Id
@@ -27,6 +29,8 @@ public class Usuario implements UserDetails{
     @Column(nullable = false)
     private Date dataCadastro;
     private Date dataInativacao;
+    @OneToMany(mappedBy = "usuario")
+    private List<Time> time;
     public Long getId() {
         return id;
     }

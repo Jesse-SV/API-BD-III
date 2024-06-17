@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 @Entity
 @Table(name = "Time")
@@ -22,6 +23,7 @@ public class Time{
     private String divisao;
     @Column(nullable = false)
     private Date anoFundacao;
+    @ManyToOne
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
     public Long getId() {
