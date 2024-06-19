@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TimeResponseDTO {
     private Long id;
+    private String nome;
     private String cidade;
     private String estado;
     private String pais;
@@ -14,6 +15,12 @@ public class TimeResponseDTO {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     public String getCidade() {
         return cidade;

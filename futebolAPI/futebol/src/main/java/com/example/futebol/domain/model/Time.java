@@ -17,6 +17,7 @@ public class Time{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idTime")
     private Long id;
+    private String nome;
     private String cidade;
     private String estado;
     private String pais;
@@ -31,6 +32,12 @@ public class Time{
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     public String getCidade() {
         return cidade;
@@ -68,5 +75,4 @@ public class Time{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
 }
