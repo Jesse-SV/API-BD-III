@@ -1,6 +1,5 @@
 package com.example.futebol.domain.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,7 +28,7 @@ public class TimeService implements ICRUDService<TimeRequestDTO,TimeResponseDTO>
     public List<TimeResponseDTO> obterTodos() {
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Time> times = timeRepository.findByUsuario(usuario); 
-        return times.stream().map(time -> modelMapper.map(times,TimeResponseDTO.class)).collect(Collectors.toList());
+        return times.stream().map(time -> modelMapper.map(time,TimeResponseDTO.class)).collect(Collectors.toList());
     }
     @Override
     public TimeResponseDTO obterPorId(Long id) {
@@ -54,14 +53,14 @@ public class TimeService implements ICRUDService<TimeRequestDTO,TimeResponseDTO>
         time.setDivisao(dto.getDivisao());
         time.setEstado(dto.getEstado());
         time.setPais(dto.getPais());
-        time.setAnoFundacao(new Date());
+        time.setAnoFundacao(dto.getAnoFundacao());
         time.setUsuario(usuario);
         time = timeRepository.save(time);
         return modelMapper.map(time, TimeResponseDTO.class);
     }
     @Override
     public TimeResponseDTO atualizar(Long id, TimeRequestDTO dto) {
-        obterPorId(id);
+        TimeResponseDTO timeBanco = obterPorId(id);
         validarTime(dto);
         Time time = modelMapper.map(dto,Time.class);
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -72,6 +71,7 @@ public class TimeService implements ICRUDService<TimeRequestDTO,TimeResponseDTO>
         time.setEstado(dto.getEstado());
         time.setPais(dto.getPais());
         time.setUsuario(usuario);
+        time.setAnoFundacao(time.getAnoFundacao());
         time = timeRepository.save(time);
         return modelMapper.map(time, TimeResponseDTO.class);
     }
@@ -82,7 +82,7 @@ public class TimeService implements ICRUDService<TimeRequestDTO,TimeResponseDTO>
     }
     public void validarTime(TimeRequestDTO dto){
         if((dto.getNome() == null) || (dto.getCidade() == null) 
-        || (dto.getDivisao() == null) || ((dto.getDivisao() == null) || (dto.getPais() == null))){
+        || (dto.getDivisao() == null) ||  (dto.getPais() == null) || (dto.getAnoFundacao() == null)){
             throw new ResourceBadRequestException("Cadastro ou alteração de Time invalido!");
         }
     }

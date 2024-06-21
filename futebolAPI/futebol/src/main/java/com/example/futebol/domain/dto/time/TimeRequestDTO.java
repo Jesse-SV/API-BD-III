@@ -1,6 +1,5 @@
 package com.example.futebol.domain.dto.time;
 
-import java.util.Date;
 
 public class TimeRequestDTO {
     private String nome;
@@ -8,8 +7,8 @@ public class TimeRequestDTO {
     private String estado;
     private String pais;
     private String divisao;
-    private Date anoFundacao;
-    
+    private String anoFundacao;
+
     public String getNome() {
         return nome;
     }
@@ -40,10 +39,10 @@ public class TimeRequestDTO {
     public void setDivisao(String divisao) {
         this.divisao = divisao;
     }
-    public Date getAnoFundacao() {
+    public String getAnoFundacao() {
         return anoFundacao;
     }
-    public void setAnoFundacao(Date anoFundacao) {
+    public void setAnoFundacao(String anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
 }

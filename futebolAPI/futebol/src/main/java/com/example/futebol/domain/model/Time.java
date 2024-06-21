@@ -1,7 +1,5 @@
 package com.example.futebol.domain.model;
 
-import java.util.Date;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +21,7 @@ public class Time{
     private String pais;
     private String divisao;
     @Column(nullable = false)
-    private Date anoFundacao;
+    private String anoFundacao;
     @ManyToOne
     @JoinColumn(name = "idUsuario")
     private Usuario usuario;
@@ -63,10 +61,10 @@ public class Time{
     public void setDivisao(String divisao) {
         this.divisao = divisao;
     }
-    public Date getAnoFundacao() {
+    public String getAnoFundacao() {
         return anoFundacao;
     }
-    public void setAnoFundacao(Date anoFundacao) {
+    public void setAnoFundacao(String anoFundacao) {
         this.anoFundacao = anoFundacao;
     }
     public Usuario getUsuario() {
